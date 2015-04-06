@@ -7,8 +7,20 @@
     tools:context=".MainActivity$PlaceholderFragment"
     android:id="@+id/main_layout">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textbox_songlist" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/song_list"
+            android:id="@+id/button_songlist"
+            android:onClick="openSonglist" />
+    </LinearLayout>
 </RelativeLayout>

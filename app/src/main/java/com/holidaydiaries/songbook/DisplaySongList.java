@@ -1,6 +1,5 @@
 package com.holidaydiaries.songbook;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -13,12 +12,12 @@ import android.view.ViewGroup;
 import android.os.Build;
 
 
-public class MainActivity extends ActionBarActivity {
+public class DisplaySongList extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_display_song_list);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -30,7 +29,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_display_song_list, menu);
         return true;
     }
 
@@ -60,13 +59,8 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_display_song_list, container, false);
             return rootView;
         }
-    }
-    public void openSonglist (View view){
-        Intent intent = new Intent( this, DisplaySongList.class);
-        startActivity(intent);
-
     }
 }

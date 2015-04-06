@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".DisplaySongList"
+            android:label="@string/title_activity_display_song_list" >
+        </activity>
     </application>
 
 </manifest>
