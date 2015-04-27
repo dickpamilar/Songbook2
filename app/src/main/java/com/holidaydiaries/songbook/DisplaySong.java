@@ -1,6 +1,8 @@
 package com.holidaydiaries.songbook;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -17,6 +19,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.holidaydiaries.songbook.contentprovider.SongBookContentProvider;
+import com.holidaydiaries.songbook.database.SongTable;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,6 +31,7 @@ public class DisplaySong extends ActionBarActivity {
 
     TextView textView;
     ScaleGestureDetector scaleGestureDetector;
+    private Uri todoUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +111,80 @@ public class DisplaySong extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_display_song, container, false);
+            textView = (TextView) rootView.findViewById(R.id.textview_song);
+            //*********************************
+            Bundle extras = getIntent().getExtras();
+
+            // check from the saved Instance
+            todoUri = (savedInstanceState == null) ? null : (Uri) savedInstanceState
+                    .getParcelable(SongBookContentProvider.CONTENT_ITEM_TYPE);
+
+            // Or passed from the other activity
+            if (extras != null) {
+                todoUri = extras
+                        .getParcelable(SongBookContentProvider.CONTENT_ITEM_TYPE);
+
+                displaySong(todoUri);
+
+            }
+            setRetainInstance(true);
+            return rootView;
+        }
+        private void displaySong(Uri uri) {
+            String[] projection = { SongTable.COLUMN_FILENAME    };
+            Cursor cursor = getContentResolver().query(uri, projection, null, null,
+                    null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                String song_title = cursor.getString(cursor
+                        .getColumnIndexOrThrow(SongTable.COLUMN_FILENAME));
+
+
+                scaleGestureDetector = new ScaleGestureDetector(this.getActivity(), new simpleOnScaleGestureListener());
+                String song = "";
+                try{
+                    InputStream songfile = getAssets().open(song_title);
+                    String line;
+                    InputStreamReader inputStreamReader = new InputStreamReader(songfile);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    while (( line = bufferedReader.readLine()) != null) {
+                        song += line + "\n";
+                    }
+
+
+                }
+                catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), e.toString() + e.getMessage(),Toast.LENGTH_LONG).show();
+                }
+                textView.setText(song);
+                textView.setHorizontallyScrolling(true);
+                textView.setMovementMethod(new ScrollingMovementMethod());
+                textView.setOnTouchListener(new View.OnTouchListener()
+                {
+
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event)
+                    {
+                        scaleGestureDetector.onTouchEvent(event);
+                        return v.performClick();
+
+                    }
+                });
+
+
+
+                // always close the cursor
+                cursor.close();
+            }
+        }
+
+
+
+
+        //(****************************************
+
+/*
+
             Intent intent = getIntent();
             String song_title = intent.getStringExtra(MainActivity.EXTRA_SONG_TITLE);
             textView = (TextView) rootView.findViewById(R.id.textview_song);
@@ -138,8 +218,9 @@ public class DisplaySong extends ActionBarActivity {
 
                 }
             });
-            setRetainInstance(true);
-            return rootView;
-        }
+
+            }
+
+*/
     }
 }

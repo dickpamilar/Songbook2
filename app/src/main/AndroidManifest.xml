@@ -24,6 +24,10 @@
             android:name=".DisplaySong"
             android:label="@string/title_activity_display_song" >
         </activity>
+        <provider
+            android:name=".contentprovider.SongBookContentProvider"
+            android:authorities="com.holidaydiaries.songbook.contentprovider" >
+        </provider>
     </application>
 
 </manifest>
