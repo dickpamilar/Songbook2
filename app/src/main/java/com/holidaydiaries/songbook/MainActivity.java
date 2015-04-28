@@ -2,6 +2,7 @@ package com.holidaydiaries.songbook;
 
 import android.content.Intent;
 import android.database.SQLException;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -22,6 +23,9 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActionBar ab =getSupportActionBar();
+        ab.setDisplayShowHomeEnabled(true);
+        ab.setIcon(R.drawable.ic_action_sb);
 
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {

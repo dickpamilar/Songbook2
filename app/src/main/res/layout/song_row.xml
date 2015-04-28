@@ -30,6 +30,7 @@
 
         android:layout_weight="9"
         android:textColor="@color/abc_primary_text_material_light"
-        android:text="Song Title" />
+        android:text="Song Title"
+        android:textStyle="bold" />
 
 </LinearLayout>

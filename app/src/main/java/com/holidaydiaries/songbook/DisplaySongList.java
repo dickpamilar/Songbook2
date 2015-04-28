@@ -37,6 +37,7 @@ public class DisplaySongList extends ActionBarActivity  {
 
         setContentView(R.layout.activity_display_song_list);
 
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().
                     add(R.id.container, new PlaceholderFragment())

@@ -12,6 +12,7 @@ public class SongTable {
     public static final String COLUMN_TITLE = "title";
     public static final String COLUMN_FILENAME = "song_filename";
     public static final String COLUMN_SONGNUM = "song_number";
+    public static final String INDEX_TITLE_IDX = "idx_title";
 
     private static final String DATABASE_CREATE = "create table "
             + TABLE_SONG
@@ -22,8 +23,13 @@ public class SongTable {
             + COLUMN_SONGNUM + " text not null "
             + ");";
 
+    private static final String INDEX_CREATE = "create index "
+            + INDEX_TITLE_IDX
+            + "on" + TABLE_SONG + "(" + COLUMN_FILENAME  + ");";
+
     public static void onCreate(SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);
+        database.execSQL(INDEX_CREATE);
     }
 
     public static void onUpgrade(SQLiteDatabase database, int oldVersion,
